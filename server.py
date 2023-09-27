@@ -192,7 +192,7 @@ def read_emails():
 
     # where() sets the query parameters for the request
     # all() executes the request and return the results
-    res = nylas.threads.where(limit=5, view="expanded").all()
+    res = nylas.threads.where(limit=10, view="expanded").all()
 
     # enforce_read_only=False is used to return the full thread objects
     res_json = [item.as_json(enforce_read_only=False) for item in res]
