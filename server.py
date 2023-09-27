@@ -300,7 +300,7 @@ def ask_ai():
         1.2,  # Repetition penalty(numeric value between 1.0 and 2.0)
         api_name="/chat"
     )
-    answer.replace('</s>','')
+    answer = answer.replace('</s>','')
     message = {"ai_response" : answer}
     # Return the sent message object
     return message
