@@ -9,6 +9,7 @@ from flask_cors import CORS
 import time
 from bs4 import BeautifulSoup
 import re
+from gradio_client import Client
 
 
 from nylas import APIClient
@@ -287,16 +288,20 @@ def ask_ai():
     """
     documentation
     """
-
-    user = g.user
+    llamav2_client = Client("https://ysharma-explore-llamav2-with-tgi.hf.space/")
     request_body = request.get_json()
-
-    # Set draft properties after initialization
-    print("request_body is")
-    print(request_body)
-    time.sleep(2)
-    
-    message = {"ai_response" : "this is response from ai"}
+    prompt_text = "Mail body is : " + request_body['originalText'] + "</end of mail body> " + " Question about the mail is : " + request_body['body']
+    answer = llamav2_client.predict(
+        prompt_text,  # str in 'Message' Textbox component
+        "You are an intelligent mail assistant. You will be given a mail body and a question about the mail will be asked to you",  # str in 'Optional system prompt' Textbox component
+        0.9,  # Temperature ( numeric value between 0.0 and 1.0)
+        512,  # Max new tokens (numeric value between 0 and 4096)
+        0.4,  # Top-p (nucleus sampling) (numeric value between 0.0 and 1)
+        1.2,  # Repetition penalty(numeric value between 1.0 and 2.0)
+        api_name="/chat"
+    )
+    answer.replace('</s>','')
+    message = {"ai_response" : answer}
     # Return the sent message object
     return message
 
