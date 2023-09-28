@@ -293,7 +293,7 @@ def ask_ai():
     prompt_text = "Mail body is : " + request_body['originalText'] + "</end of mail body> " + " Question about the mail is : " + request_body['body']
     answer = llamav2_client.predict(
         prompt_text,  # str in 'Message' Textbox component
-        "You are an intelligent mail assistant. You will be given a mail body and a question about the mail will be asked to you",  # str in 'Optional system prompt' Textbox component
+        "You are an intelligent mail assistant. You will be given a mail body and a question about the mail will be asked to you. You are having conversation with support team member. Premium options to AIGPT are 1.X USD per month and 2.Y USD per month ",  # str in 'Optional system prompt' Textbox component
         0.9,  # Temperature ( numeric value between 0.0 and 1.0)
         512,  # Max new tokens (numeric value between 0 and 4096)
         0.4,  # Top-p (nucleus sampling) (numeric value between 0.0 and 1)
